@@ -44,8 +44,9 @@ Include Python only where computation is genuinely illuminating (e.g. visualisin
 | 09 | Lagrange Multipliers | Calc 3 | Constrained optimisation |
 | 10 | Line Integrals and Green's Theorem | Calc 3 | Conservative fields, FT of line integrals |
 | 11 | Stokes' and Divergence Theorems | Calc 3 | Vector calculus theorems |
+| 12 | Series: Recognition, Manipulation, Identities | Calc 2 | Targets S06 errors: constant-power factoring, $(1+1/n)^n \to e$, AST naming, conditional convergence; geometric series, power series calculus, root test, Euler's formula, Basel problem; prerequisite for Fourier analysis |
 
-After Session 11: plan a mixed review session retesting S01 gaps (IBP, power iteration) and any weaknesses observed along the way.
+After Session 12: plan a mixed review session retesting S01 gaps (IBP, power iteration) and any weaknesses observed along the way.
 
 ## Calibration notes (from Session 01)
 
