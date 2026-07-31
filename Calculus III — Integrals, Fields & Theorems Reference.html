@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculus III — Integrals, Fields & Theorems Reference</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #1a1d27;
+    --bg3: #22263a;
+    --border: #2e3350;
+    --text: #e2e8f0;
+    --muted: #8892b0;
+    --accent1: #64b5f6;   /* blue — curves / 1D */
+    --accent2: #81c784;   /* green — surfaces / 2D */
+    --accent3: #ffb74d;   /* orange — volumes / 3D */
+    --accent4: #ce93d8;   /* purple — theorems */
+    --accent5: #f06292;   /* pink — conservative */
+    --yellow: #fff176;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0 0 60px 0;
+  }
+  header {
+    background: linear-gradient(135deg, #1a1d27 0%, #0d1b3e 100%);
+    border-bottom: 2px solid var(--accent4);
+    padding: 36px 40px 28px;
+  }
+  header h1 { font-size: 1.9rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  header p { color: var(--muted); font-size: 0.95rem; }
+
+  nav {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 10px 40px; position: sticky; top: 0; z-index: 100;
+  }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 0.82rem;
+    padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border);
+    transition: all 0.15s;
+  }
+  nav a:hover { color: var(--text); border-color: var(--accent4); background: var(--bg3); }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  section { margin-top: 48px; }
+  h2 {
+    font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .tag {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 3px;
+  }
+  h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--accent1); }
+
+  /* ── DIMENSION LADDER ── */
+  .ladder {
+    display: flex; gap: 0; width: 100%;
+    border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
+  }
+  .rung {
+    flex: 1; padding: 20px 16px; background: var(--bg2);
+    border-right: 1px solid var(--border); position: relative;
+  }
+  .rung:last-child { border-right: none; }
+  .rung-dim {
+    font-size: 2rem; font-weight: 800; opacity: 0.15; position: absolute;
+    top: 12px; right: 14px; line-height: 1;
+  }
+  .rung-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .rung-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .rung-items { font-size: 0.82rem; color: var(--muted); }
+  .rung-items li { list-style: none; padding: 2px 0; }
+  .rung-items li::before { content: '→ '; }
+  .c1 .rung-dim, .c1 .rung-title { color: var(--accent1); }
+  .c2 .rung-dim, .c2 .rung-title { color: var(--accent2); }
+  .c3 .rung-dim, .c3 .rung-title { color: var(--accent3); }
+  .c0 .rung-dim, .c0 .rung-title { color: var(--muted); }
+
+  /* ── TABLES ── */
+  .tbl-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--bg3); }
+  th {
+    padding: 10px 14px; text-align: left; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    vertical-align: top; font-size: 0.88rem;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg3); }
+  code {
+    background: #1e2235; border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 6px; font-size: 0.9em;
+    font-family: 'Fira Code', 'Consolas', monospace; color: var(--yellow);
+  }
+  .math {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic; font-size: 1.05em;
+  }
+  .dim-tag {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    padding: 1px 6px; border-radius: 3px; vertical-align: middle; margin-left: 4px;
+  }
+  .d0 { background: #334155; color: #94a3b8; }
+  .d1 { background: #1e3a5f; color: var(--accent1); }
+  .d2 { background: #1b3a2a; color: var(--accent2); }
+  .d3 { background: #3a2810; color: var(--accent3); }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 8px; padding: 16px 20px; margin: 16px 0;
+    border-left: 4px solid;
+  }
+  .callout.blue { background: #0d2040; border-color: var(--accent1); }
+  .callout.green { background: #0d2a1a; border-color: var(--accent2); }
+  .callout.orange { background: #2a1a08; border-color: var(--accent3); }
+  .callout.purple { background: #1e1040; border-color: var(--accent4); }
+  .callout.pink { background: #2a1020; border-color: var(--accent5); }
+  .callout.yellow { background: #2a2408; border-color: var(--yellow); }
+  .callout-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; }
+  .callout.blue .callout-title { color: var(--accent1); }
+  .callout.green .callout-title { color: var(--accent2); }
+  .callout.orange .callout-title { color: var(--accent3); }
+  .callout.purple .callout-title { color: var(--accent4); }
+  .callout.pink .callout-title { color: var(--accent5); }
+  .callout.yellow .callout-title { color: var(--yellow); }
+
+  /* ── THEOREM CARDS ── */
+  .theorem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .theorem-grid { grid-template-columns: 1fr; } }
+  .theorem-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .theorem-card h3 { margin-top: 0; }
+  .theorem-eqn {
+    background: #0f1117; border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 16px; margin: 10px 0; font-size: 1rem;
+    font-family: 'Georgia', serif; font-style: italic; text-align: center;
+    line-height: 1.8;
+  }
+  .theorem-eqn .eq-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    font-style: normal; font-family: sans-serif; display: block;
+    color: var(--muted); margin-bottom: 4px;
+  }
+  .arrow-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted); margin-top: 8px;
+  }
+  .arrow-row .pill {
+    padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill-blue { background: #1e3a5f; color: var(--accent1); }
+  .pill-green { background: #1b3a2a; color: var(--accent2); }
+  .pill-orange { background: #3a2810; color: var(--accent3); }
+  .pill-purple { background: #2a1a40; color: var(--accent4); }
+
+  /* ── BOUNDARY UNIFIER ── */
+  .chain {
+    display: flex; align-items: center; gap: 0;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin: 16px 0;
+  }
+  .chain-node {
+    flex: 1; padding: 16px; text-align: center;
+  }
+  .chain-arrow {
+    color: var(--muted); font-size: 1.4rem; padding: 0 4px;
+    flex-shrink: 0;
+  }
+  .chain-node .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+  .chain-node .domain { font-size: 1rem; font-weight: 700; }
+  .chain-node .integral { font-family: 'Georgia', serif; font-style: italic; font-size: 0.9rem; color: var(--muted); margin-top: 4px; }
+  .chain-node .deriv { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 650px) { .two-col { grid-template-columns: 1fr; } }
+
+  .mnemonic-box {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 18px; margin: 12px 0;
+  }
+  .mnemonic-box h4 { font-size: 0.85rem; color: var(--yellow); margin-bottom: 8px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  .row-1d td:first-child { border-left: 3px solid var(--accent1); }
+  .row-2d td:first-child { border-left: 3px solid var(--accent2); }
+  .row-3d td:first-child { border-left: 3px solid var(--accent3); }
+
+  sup { font-size: 0.7em; vertical-align: super; }
+  sub { font-size: 0.7em; vertical-align: sub; }
+
+  .highlight { color: var(--yellow); font-weight: 600; }
+
+  footer { color: var(--muted); font-size: 0.78rem; text-align: center; margin-top: 60px; }
+
+/* ══════════════════════════════════════════════════════
+   PRINT / PDF STYLES  (Safari "Export as PDF" / Cmd-P)
+   ══════════════════════════════════════════════════════ */
+@media print {
+
+  /* ── Page setup ── */
+  @page { size: A4; margin: 1.4cm 1.6cm; }
+
+  /* Force Safari to print background colours */
+  * { -webkit-print-color-adjust: exact !important;
+           print-color-adjust: exact !important; }
+
+  /* ── Page breaks between sections ── */
+  /* Every <section> starts on a fresh page … */
+  section { break-before: page; page-break-before: always; }
+  /* … except the very first one (sits under the header) */
+  section#ladder { break-before: avoid; page-break-before: avoid; }
+
+  /* Keep headings glued to what follows them */
+  h2 { break-after: avoid; page-break-after: avoid; }
+  h3 { break-after: avoid; page-break-after: avoid; }
+
+  /* Don't split these boxes mid-page */
+  table          { break-inside: avoid; page-break-inside: avoid; }
+  .ladder        { break-inside: avoid; page-break-inside: avoid; }
+  .callout       { break-inside: avoid; page-break-inside: avoid; }
+  .theorem-card  { break-inside: avoid; page-break-inside: avoid; }
+  .theorem-grid  { break-inside: avoid; page-break-inside: avoid; }
+  .chain         { break-inside: avoid; page-break-inside: avoid; }
+  .mnemonic-box  { break-inside: avoid; page-break-inside: avoid; }
+  .two-col       { break-inside: avoid; page-break-inside: avoid; }
+
+  /* ── Global light-mode overrides ── */
+  body    { background: #fff !important; color: #1a1a2e !important; font-size: 9.5pt; }
+  main    { max-width: 100% !important; padding: 0 !important; }
+
+  /* Hide the sticky nav — useless on paper */
+  nav     { display: none !important; }
+
+  /* Header */
+  header  { background: #eef2ff !important; border-bottom: 2pt solid #6a1b9a !important;
+            padding: 18px 24px 14px !important; }
+  header h1 { color: #1a1a2e !important; font-size: 1.5rem !important; }
+  header p  { color: #546e7a !important; }
+
+  /* Section rule line */
+  hr { border-top-color: #b0bec5 !important; }
+
+  /* ── Dimensional ladder ── */
+  .ladder { border-color: #b0bec5 !important; }
+  .rung   { background: #f5f5f5 !important; border-right-color: #b0bec5 !important; }
+  .c1     { background: #e3f2fd !important; }
+  .c2     { background: #e8f5e9 !important; }
+  .c3     { background: #fff3e0 !important; }
+  .c0 .rung-dim  { color: #aaa !important; }
+  .c1 .rung-dim, .c1 .rung-title { color: #1565c0 !important; }
+  .c2 .rung-dim, .c2 .rung-title { color: #2e7d32 !important; }
+  .c3 .rung-dim, .c3 .rung-title { color: #bf360c !important; }
+  .rung-items { color: #546e7a !important; }
+  .rung-label { color: #546e7a !important; }
+
+  /* ── Tables ── */
+  .tbl-wrap  { border-color: #b0bec5 !important; }
+  thead tr   { background: #eceff1 !important; }
+  th         { color: #546e7a !important; }
+  td         { border-bottom-color: #e0e0e0 !important; }
+  tr:hover td { background: transparent !important; }
+
+  /* Dimension pills */
+  .dim-tag    { }
+  .d0 { background: #eceff1 !important; color: #546e7a !important; }
+  .d1 { background: #bbdefb !important; color: #1565c0 !important; }
+  .d2 { background: #c8e6c9 !important; color: #2e7d32 !important; }
+  .d3 { background: #ffccbc !important; color: #bf360c !important; }
+
+  /* Colour-coded left borders on master table */
+  .row-1d td:first-child { border-left-color: #1565c0 !important; }
+  .row-2d td:first-child { border-left-color: #2e7d32 !important; }
+  .row-3d td:first-child { border-left-color: #bf360c !important; }
+
+  /* ── Code spans ── */
+  code { background: #f5f5f5 !important; color: #1a1a2e !important;
+         border-color: #b0bec5 !important; }
+
+  /* ── Callout boxes ── */
+  .callout         { }
+  .callout.blue    { background: #e3f2fd !important; border-left-color: #1565c0 !important; }
+  .callout.green   { background: #e8f5e9 !important; border-left-color: #2e7d32 !important; }
+  .callout.orange  { background: #fff3e0 !important; border-left-color: #bf360c !important; }
+  .callout.purple  { background: #f3e5f5 !important; border-left-color: #6a1b9a !important; }
+  .callout.pink    { background: #fce4ec !important; border-left-color: #ad1457 !important; }
+  .callout.yellow  { background: #fffde7 !important; border-left-color: #e65100 !important; }
+
+  .callout.blue   .callout-title { color: #1565c0 !important; }
+  .callout.green  .callout-title { color: #2e7d32 !important; }
+  .callout.orange .callout-title { color: #bf360c !important; }
+  .callout.purple .callout-title { color: #6a1b9a !important; }
+  .callout.pink   .callout-title { color: #ad1457 !important; }
+  .callout.yellow .callout-title { color: #e65100 !important; }
+
+  /* All callout body text must be dark */
+  .callout, .callout * { color: #1a1a2e !important; }
+  .callout .callout-title { font-weight: 700; }
+
+  /* ── Theorem section ── */
+  .chain        { background: #f5f5f5 !important; border-color: #b0bec5 !important; }
+  .chain-node   { background: #eceff1 !important; }
+  .chain-node .label    { color: #546e7a !important; }
+  .chain-node .domain   { color: #1a1a2e !important; }
+  .chain-node .integral { color: #546e7a !important; font-style: italic; }
+  .chain-node .deriv    { color: #546e7a !important; }
+  .chain-arrow          { color: #546e7a !important; }
+
+  .theorem-grid { grid-template-columns: 1fr 1fr !important; }
+  .theorem-card { background: #fff !important; border-color: #b0bec5 !important; }
+  .theorem-eqn  { background: #f5f5f5 !important; border-color: #b0bec5 !important;
+                  color: #1a1a2e !important; }
+  .theorem-eqn .eq-label { color: #546e7a !important; }
+
+  .pill-blue   { background: #bbdefb !important; color: #1565c0 !important; }
+  .pill-green  { background: #c8e6c9 !important; color: #2e7d32 !important; }
+  .pill-orange { background: #ffccbc !important; color: #bf360c !important; }
+  .pill-purple { background: #e1bee7 !important; color: #6a1b9a !important; }
+
+  .theorem-card h3 { color: inherit !important; }
+
+  /* ── Conservative fields section ── */
+  .two-col { grid-template-columns: 1fr 1fr !important; }
+
+  /* ── Mnemonics ── */
+  .mnemonic-box         { background: #f5f5f5 !important; border-color: #b0bec5 !important; }
+  .mnemonic-box h4      { color: #e65100 !important; }
+  .mnemonic-box p       { color: #1a1a2e !important; }
+
+  /* All remaining muted text should stay readable */
+  [style*="color:var(--muted)"],
+  .muted { color: #546e7a !important; }
+
+  footer { color: #546e7a !important; margin-top: 20px !important; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Calculus III — Integration Notation Reference</h1>
+  <p>Line integrals · Surface integrals · Vector fields · Green, Stokes &amp; Divergence theorems</p>
+</header>
+
+<nav>
+  <a href="#ladder">Dimensional Ladder</a>
+  <a href="#decoder">Notation Decoder</a>
+  <a href="#master">Master Table</a>
+  <a href="#theorems">The Big Theorems</a>
+  <a href="#conservative">Conservative Fields</a>
+  <a href="#param">Parameterisation</a>
+  <a href="#mnemonics">Mnemonics</a>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="ladder">
+  <h2>1 · The Dimensional Ladder <span class="tag" style="background:#1e2235;color:var(--muted)">Start Here</span></h2>
+
+  <p style="color:var(--muted);margin-bottom:16px;">
+    Every integral in this course lives at exactly one rung of a dimensional ladder. The <strong>subscript</strong> on ∫ tells you which rung. The <strong>differential</strong> tells you what kind of infinitesimal chunk you're summing.
+  </p>
+
+  <div class="ladder">
+    <div class="rung c0">
+      <div class="rung-dim">0</div>
+      <div class="rung-label">0-dimensional</div>
+      <div class="rung-title">Points</div>
+      <ul class="rung-items">
+        <li>Endpoints a, b</li>
+        <li>Boundary of a curve</li>
+        <li>f(b) − f(a)</li>
+      </ul>
+    </div>
+    <div class="rung c1">
+      <div class="rung-dim">1</div>
+      <div class="rung-label">1-dimensional</div>
+      <div class="rung-title">Curves C</div>
+      <ul class="rung-items">
+        <li>Subscript: <em>C</em></li>
+        <li>Scalar: <code>ds</code></li>
+        <li>Vector: <code>dr</code></li>
+        <li>Param: <code>dt</code></li>
+      </ul>
+    </div>
+    <div class="rung c2">
+      <div class="rung-dim">2</div>
+      <div class="rung-label">2-dimensional</div>
+      <div class="rung-title">Regions R/D · Surfaces S</div>
+      <ul class="rung-items">
+        <li>Subscripts: <em>R, D</em> (flat), <em>S</em> (curved)</li>
+        <li>Flat area: <code>dA</code> = <code>dx dy</code></li>
+        <li>Surface scalar: <code>dS</code></li>
+        <li>Surface vector: <code>dS</code> (bold)</li>
+        <li>Param: <code>du dv</code></li>
+      </ul>
+    </div>
+    <div class="rung c3">
+      <div class="rung-dim">3</div>
+      <div class="rung-label">3-dimensional</div>
+      <div class="rung-title">Volumes V/E</div>
+      <ul class="rung-items">
+        <li>Subscripts: <em>V, E, W</em></li>
+        <li><code>dV</code> = <code>dx dy dz</code></li>
+        <li>Spherical/cylindrical coords</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout yellow" style="margin-top:20px;">
+    <div class="callout-title">⚠ The single most confusing notation clash</div>
+    <code>dS</code> (lowercase italic) = scalar area element (a positive number, like <em>ds</em> for arc length)<br>
+    <code><strong>d</strong>S</code> or <code>dS⃗</code> (bold / vector) = vector surface element = <strong>n</strong> dS (a vector pointing outward)<br>
+    <em>Context and bold-font are your only clues. When in doubt: if it's inside <strong>F</strong>·d<strong>S</strong>, it's the vector one.</em>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="decoder">
+  <h2>2 · Notation Decoder</h2>
+
+  <h3>Subscripts — what you're integrating <em>over</em></h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Symbol</th><th>Dimension</th><th>What it is</th><th>Typical setting</th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="math">C</span></td><td><span class="dim-tag d1">1D</span></td><td>Curve (path) in ℝ² or ℝ³</td><td>Line integrals</td></tr>
+        <tr><td><span class="math">∂C</span></td><td><span class="dim-tag d0">0D</span></td><td>Boundary of C = its two endpoints</td><td>FTC for line integrals</td></tr>
+        <tr><td><span class="math">R</span> or <span class="math">D</span></td><td><span class="dim-tag d2">2D</span></td><td>Flat region in ℝ² (a "domain")</td><td>Double integrals, Green's Thm</td></tr>
+        <tr><td><span class="math">∂D</span> or <span class="math">∂R</span></td><td><span class="dim-tag d1">1D</span></td><td>Boundary of region = a closed curve</td><td>Green's Theorem LHS</td></tr>
+        <tr><td><span class="math">S</span></td><td><span class="dim-tag d2">2D</span></td><td>Surface in ℝ³ (a 2D manifold)</td><td>Surface integrals, Stokes/Div</td></tr>
+        <tr><td><span class="math">∂S</span></td><td><span class="dim-tag d1">1D</span></td><td>Boundary of surface S = a closed curve</td><td>Stokes' Theorem LHS</td></tr>
+        <tr><td><span class="math">V</span> or <span class="math">E</span></td><td><span class="dim-tag d3">3D</span></td><td>Volume (solid region) in ℝ³</td><td>Triple integrals, Div Thm</td></tr>
+        <tr><td><span class="math">∂V</span> or <span class="math">∂E</span></td><td><span class="dim-tag d2">2D</span></td><td>Boundary of volume = a closed surface</td><td>Divergence Theorem LHS</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:24px;">Differentials — how you're measuring infinitesimal pieces</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Symbol</th><th>Type</th><th>What it measures</th><th>How computed</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><code>dt</code></td>
+          <td><span class="dim-tag d1">param</span></td>
+          <td>Infinitesimal step in parameter space</td>
+          <td>Bare parameter; needs |<strong>r</strong>′(t)| to become geometric</td>
+        </tr>
+        <tr>
+          <td><code>ds</code></td>
+          <td><span class="dim-tag d1">scalar</span></td>
+          <td>Arc length element (always positive)</td>
+          <td><code>ds = |r′(t)| dt</code> = √(x′²+y′²+z′²) dt</td>
+        </tr>
+        <tr>
+          <td><code>dr</code> or <code><strong>dr</strong></code></td>
+          <td><span class="dim-tag d1">vector</span></td>
+          <td>Directed displacement along curve</td>
+          <td><code><strong>dr</strong> = r′(t) dt</code> = (dx, dy, dz); note <strong>dr</strong> = <strong>T</strong> ds</td>
+        </tr>
+        <tr>
+          <td><code>dx dy</code> or <code>dA</code></td>
+          <td><span class="dim-tag d2">scalar</span></td>
+          <td>Area element in flat region</td>
+          <td>Cartesian; also r dr dθ (polar), or |J| du dv</td>
+        </tr>
+        <tr>
+          <td><code>du dv</code></td>
+          <td><span class="dim-tag d2">param</span></td>
+          <td>Parameter-space area element</td>
+          <td>Bare; needs |<strong>r</strong>ᵤ × <strong>r</strong>ᵥ| to become geometric</td>
+        </tr>
+        <tr>
+          <td><code>dS</code> <em>(scalar)</em></td>
+          <td><span class="dim-tag d2">scalar</span></td>
+          <td>Surface area element (always positive)</td>
+          <td><code>dS = |rᵤ × rᵥ| du dv</code></td>
+        </tr>
+        <tr>
+          <td><code><strong>d</strong>S</code> <em>(vector)</em></td>
+          <td><span class="dim-tag d2">vector</span></td>
+          <td>Oriented surface element (normal vector × area)</td>
+          <td><code><strong>dS</strong> = (rᵤ × rᵥ) du dv</code> = <strong>n</strong> dS</td>
+        </tr>
+        <tr>
+          <td><code>dV</code></td>
+          <td><span class="dim-tag d3">scalar</span></td>
+          <td>Volume element</td>
+          <td>dx dy dz; or ρ² sin φ dρ dφ dθ; or r dr dθ dz</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout blue" style="margin-top:16px;">
+    <div class="callout-title">Key insight: T and n are unit vectors built into the differentials</div>
+    <strong>dr</strong> = <strong>T</strong> ds — the tangent unit vector times arc length<br>
+    <strong>dS</strong> = <strong>n</strong> dS — the unit normal times surface area<br>
+    So <strong>F</strong>·d<strong>r</strong> = <strong>F</strong>·<strong>T</strong> ds (work = tangential component × length) and <strong>F</strong>·d<strong>S</strong> = <strong>F</strong>·<strong>n</strong> dS (flux = normal component × area)
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="master">
+  <h2>3 · Master Table of All Integral Types</h2>
+  <p style="color:var(--muted);margin-bottom:12px;">Colour of left border = dimension of integration domain.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Name</th>
+        <th>Notation</th>
+        <th>Physical meaning</th>
+        <th>Parameterised form (how you compute it)</th>
+        <th>When zero / special</th>
+      </tr></thead>
+      <tbody>
+
+        <!-- ─ 1D ─ -->
+        <tr class="row-1d">
+          <td><strong>Scalar line integral</strong></td>
+          <td><code>∫<sub>C</sub> f ds</code></td>
+          <td>Mass of wire C with density f; or weighted arc length</td>
+          <td><code>∫<sub>a</sub><sup>b</sup> f(r(t)) |r′(t)| dt</code></td>
+          <td>f = 0 everywhere on C</td>
+        </tr>
+        <tr class="row-1d">
+          <td><strong>Vector line integral (work)</strong></td>
+          <td><code>∫<sub>C</sub> <strong>F</strong>·d<strong>r</strong></code></td>
+          <td>Work done by force <strong>F</strong> along C</td>
+          <td><code>∫<sub>a</sub><sup>b</sup> <strong>F</strong>(r(t))·r′(t) dt</code></td>
+          <td>0 if <strong>F</strong>⊥C everywhere; 0 around any closed C if curl <strong>F</strong>=0 (conservative)</td>
+        </tr>
+        <tr class="row-1d">
+          <td><strong>Line integral (component form)</strong></td>
+          <td><code>∫<sub>C</sub> P dx + Q dy</code></td>
+          <td>Same as <strong>F</strong>·d<strong>r</strong> with <strong>F</strong>=(P,Q)</td>
+          <td><code>∫<sub>a</sub><sup>b</sup> [P x′(t) + Q y′(t)] dt</code></td>
+          <td>Related to Green's theorem</td>
+        </tr>
+        <tr class="row-1d">
+          <td><strong>Line integral in ℝ³</strong></td>
+          <td><code>∫<sub>C</sub> P dx+Q dy+R dz</code></td>
+          <td><strong>F</strong>·d<strong>r</strong> with <strong>F</strong>=(P,Q,R)</td>
+          <td><code>∫<sub>a</sub><sup>b</sup> [Px′+Qy′+Rz′] dt</code></td>
+          <td>0 on closed C if curl <strong>F</strong>=0</td>
+        </tr>
+
+        <!-- ─ 2D flat ─ -->
+        <tr class="row-2d">
+          <td><strong>Double integral</strong></td>
+          <td><code>∬<sub>R</sub> f dA</code></td>
+          <td>Mass of flat plate with density f; volume under surface</td>
+          <td><code>∫∫ f(x,y) dx dy</code> (iterate, or use polar)</td>
+          <td>f=1 gives area of R</td>
+        </tr>
+
+        <!-- ─ 2D surface ─ -->
+        <tr class="row-2d">
+          <td><strong>Scalar surface integral</strong></td>
+          <td><code>∬<sub>S</sub> f dS</code></td>
+          <td>Mass of shell S with density f</td>
+          <td><code>∬ f(r(u,v)) |rᵤ×rᵥ| du dv</code></td>
+          <td>f=1 gives surface area of S</td>
+        </tr>
+        <tr class="row-2d">
+          <td><strong>Flux integral (vector surface)</strong></td>
+          <td><code>∬<sub>S</sub> <strong>F</strong>·d<strong>S</strong></code></td>
+          <td>Net fluid flux through S; flow rate</td>
+          <td><code>∬ <strong>F</strong>(r(u,v))·(rᵤ×rᵥ) du dv</code></td>
+          <td>0 if <strong>F</strong>⊥<strong>n</strong> everywhere; 0 on closed S if div <strong>F</strong>=0</td>
+        </tr>
+        <tr class="row-2d">
+          <td><strong>Flux over z=g(x,y)</strong></td>
+          <td><code>∬<sub>S</sub> <strong>F</strong>·d<strong>S</strong></code></td>
+          <td>Flux through an explicit surface</td>
+          <td><code>∬<sub>D</sub> (-P g<sub>x</sub> - Q g<sub>y</sub> + R) dA</code> (upward normal)</td>
+          <td>Sign depends on orientation</td>
+        </tr>
+
+        <!-- ─ 3D ─ -->
+        <tr class="row-3d">
+          <td><strong>Triple integral</strong></td>
+          <td><code>∭<sub>V</sub> f dV</code></td>
+          <td>Mass of solid with density f</td>
+          <td><code>∫∫∫ f(x,y,z) dx dy dz</code></td>
+          <td>f=1 gives volume of V</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout green" style="margin-top:20px;">
+    <div class="callout-title">Reading the notation instantly</div>
+    <strong>Count the integral signs</strong> → that's the dimension.<br>
+    <strong>Read the subscript</strong> → that's the object.<br>
+    <strong>Read the differential</strong>: <em>lowercase d + lowercase letter</em> = scalar; <em>bold d + uppercase</em> = vector; <em>dt or du dv</em> = parameter (needs rescaling).
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="theorems">
+  <h2>4 · The Big Theorems <span class="tag" style="background:#2a1a40;color:var(--accent4)">Unifying Theme</span></h2>
+
+  <p style="color:var(--muted);margin-bottom:16px;">
+    Every major theorem says the same thing in different dimensions:<br>
+    <strong style="color:var(--yellow);">∫ over boundary = ∫ of derivative over interior</strong>
+  </p>
+
+  <!-- Boundary chain -->
+  <div class="chain">
+    <div class="chain-node">
+      <div class="label">0D boundary</div>
+      <div class="domain">Points a, b</div>
+      <div class="integral">f(b) − f(a)</div>
+      <div class="deriv">no derivative needed</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="label">1D boundary of 1D</div>
+      <div class="domain" style="color:var(--accent1)">∂C = {a,b}</div>
+      <div class="integral">∫<sub>C</sub> ∇f·dr</div>
+      <div class="deriv">FTC for line integrals</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="label">1D boundary of 2D</div>
+      <div class="domain" style="color:var(--accent2)">∂D = closed curve C</div>
+      <div class="integral">∮<sub>C</sub> = ∬<sub>D</sub> curl</div>
+      <div class="deriv">Green's / Stokes'</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node">
+      <div class="label">2D boundary of 3D</div>
+      <div class="domain" style="color:var(--accent3)">∂V = closed surface S</div>
+      <div class="integral">∯<sub>S</sub> = ∭<sub>V</sub> div</div>
+      <div class="deriv">Divergence Theorem</div>
+    </div>
+  </div>
+
+  <div class="theorem-grid" style="margin-top:20px;">
+
+    <!-- FTC -->
+    <div class="theorem-card">
+      <h3 style="color:var(--muted);">Fundamental Theorem for Line Integrals</h3>
+      <div class="theorem-eqn">
+        <span class="eq-label">Conservative field: F = ∇f</span>
+        ∫<sub>C</sub> <b>F</b>·d<b>r</b> = f(<b>b</b>) − f(<b>a</b>)
+      </div>
+      <div class="arrow-row">
+        <span class="pill pill-blue">1D integral</span> → <span class="pill" style="background:#334155;color:#94a3b8">0D boundary values</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:8px;">
+        Requires: <strong>F</strong> = ∇f (conservative). Path doesn't matter, only endpoints. If C is closed: result = 0.
+      </p>
+    </div>
+
+    <!-- Green's -->
+    <div class="theorem-card">
+      <h3 style="color:var(--accent2);">Green's Theorem</h3>
+      <div class="theorem-eqn">
+        <span class="eq-label">2D region D, boundary ∂D = C (counterclockwise)</span>
+        ∮<sub>C</sub> P dx + Q dy = ∬<sub>D</sub> <span style="font-style:normal;">(</span>∂Q/∂x − ∂P/∂y<span style="font-style:normal;">)</span> dA
+      </div>
+      <div class="arrow-row">
+        <span class="pill pill-blue">1D line integral</span> = <span class="pill pill-green">2D area integral of curl</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:8px;">
+        Requires: D flat (in xy-plane), C simple closed counterclockwise, <strong>F</strong> smooth on D.<br>
+        ∂Q/∂x − ∂P/∂y = (curl <strong>F</strong>)·<strong>k</strong> = the z-component of curl.
+      </p>
+    </div>
+
+    <!-- Stokes' -->
+    <div class="theorem-card">
+      <h3 style="color:var(--accent4);">Stokes' Theorem</h3>
+      <div class="theorem-eqn">
+        <span class="eq-label">Surface S in ℝ³, boundary ∂S = C (right-hand rule)</span>
+        ∮<sub>C</sub> <b>F</b>·d<b>r</b> = ∬<sub>S</sub> (curl <b>F</b>)·d<b>S</b>
+      </div>
+      <div class="arrow-row">
+        <span class="pill pill-blue">1D line integral</span> = <span class="pill pill-purple">2D surface integral of curl F</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:8px;">
+        Green's theorem is Stokes' with S being a flat region in the xy-plane!<br>
+        If curl <strong>F</strong> = 0 everywhere, then ∮<sub>C</sub> <strong>F</strong>·d<strong>r</strong> = 0 for any closed C.
+      </p>
+    </div>
+
+    <!-- Divergence -->
+    <div class="theorem-card">
+      <h3 style="color:var(--accent3);">Divergence Theorem (Gauss's)</h3>
+      <div class="theorem-eqn">
+        <span class="eq-label">Volume E, closed boundary surface ∂E = S (outward normal)</span>
+        ∯<sub>S</sub> <b>F</b>·d<b>S</b> = ∭<sub>E</sub> div <b>F</b> dV
+      </div>
+      <div class="arrow-row">
+        <span class="pill pill-green">2D flux integral</span> = <span class="pill pill-orange">3D volume integral of div F</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);margin-top:8px;">
+        If div <strong>F</strong> = 0, total flux out of any closed surface is 0 (incompressible flow).<br>
+        Use when direct surface integral is hard but volume integral is easy (or vice versa).
+      </p>
+    </div>
+
+  </div>
+
+  <div class="callout purple" style="margin-top:20px;">
+    <div class="callout-title">The Operator Ladder: gradient → curl → divergence</div>
+    The derivative that appears in each theorem follows a fixed pattern:<br><br>
+    <strong>∇f</strong> (gradient of scalar → vector) &nbsp;·&nbsp; FTC for line integrals<br>
+    <strong>curl F</strong> = ∇×<strong>F</strong> (of vector → vector) &nbsp;·&nbsp; Green's &amp; Stokes'<br>
+    <strong>div F</strong> = ∇·<strong>F</strong> (of vector → scalar) &nbsp;·&nbsp; Divergence Theorem<br><br>
+    And note: <strong>div(curl F) = 0</strong> always, <strong>curl(∇f) = 0</strong> always — these are the "boundary of a boundary = 0" identities.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="conservative">
+  <h2>5 · Conservative Vector Fields — Special Cases</h2>
+
+  <div class="callout pink">
+    <div class="callout-title">What makes a field conservative?</div>
+    <strong>F</strong> = ∇f for some scalar potential f (equivalently: curl <strong>F</strong> = 0 on a simply-connected domain)
+  </div>
+
+  <div class="two-col" style="margin-top:16px;">
+    <div>
+      <h3 style="color:var(--accent5);">Conservative field</h3>
+      <ul style="color:var(--muted);font-size:0.88rem;padding-left:20px;">
+        <li style="margin-bottom:6px;">∫<sub>C</sub> <strong>F</strong>·d<strong>r</strong> depends only on endpoints</li>
+        <li style="margin-bottom:6px;">∮<sub>C</sub> <strong>F</strong>·d<strong>r</strong> = 0 for any simple closed curve C</li>
+        <li style="margin-bottom:6px;">curl <strong>F</strong> = 0 (irrotational)</li>
+        <li style="margin-bottom:6px;">Find f by integrating: ∂f/∂x=P, ∂f/∂y=Q, ∂f/∂z=R</li>
+        <li style="margin-bottom:6px;">Use FTC: ∫<sub>C</sub> <strong>F</strong>·d<strong>r</strong> = f(end) − f(start)</li>
+        <li style="margin-bottom:6px;">Green/Stokes gives 0 = 0 (trivially true)</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--accent1);">Non-conservative field</h3>
+      <ul style="color:var(--muted);font-size:0.88rem;padding-left:20px;">
+        <li style="margin-bottom:6px;">∫<sub>C</sub> <strong>F</strong>·d<strong>r</strong> depends on path</li>
+        <li style="margin-bottom:6px;">∮<sub>C</sub> <strong>F</strong>·d<strong>r</strong> ≠ 0 in general</li>
+        <li style="margin-bottom:6px;">curl <strong>F</strong> ≠ 0 (has rotation)</li>
+        <li style="margin-bottom:6px;">Use Green's/Stokes' to convert hard loop integral to easier area integral</li>
+        <li style="margin-bottom:6px;">Closing a path can simplify: split C = C₁ + (−C₂) where C₂ is easy</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Simple closed curves in non-conservative fields (using Green's)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Situation</th><th>Approach</th><th>Result</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td>∮<sub>C</sub> <strong>F</strong>·d<strong>r</strong>, C counterclockwise around D</td>
+          <td>Green's: convert to ∬<sub>D</sub> (Q<sub>x</sub>−P<sub>y</sub>) dA</td>
+          <td>Area integral, often much easier</td>
+        </tr>
+        <tr>
+          <td>∮<sub>C</sub> <strong>F</strong>·d<strong>r</strong>, C clockwise</td>
+          <td>Reverse orientation: add minus sign</td>
+          <td>−∬<sub>D</sub> (Q<sub>x</sub>−P<sub>y</sub>) dA</td>
+        </tr>
+        <tr>
+          <td>curl <strong>F</strong> = 0 but domain has hole (e.g. F = (−y,x)/(x²+y²))</td>
+          <td>Domain not simply connected! curl=0 doesn't imply conservative</td>
+          <td>∮ = 2π × (winding number around hole)</td>
+        </tr>
+        <tr>
+          <td>Area of region via Green's</td>
+          <td>A = ½ ∮<sub>C</sub> x dy − y dx</td>
+          <td>Clever use: P=−y/2, Q=x/2, Q<sub>x</sub>−P<sub>y</sub>=1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="param">
+  <h2>6 · Parameterisation — Getting to <code>dt</code> or <code>du dv</code></h2>
+
+  <p style="color:var(--muted);margin-bottom:12px;">You always integrate in parameter space. The <em>scaling factor</em> converts parameter area/length to geometric area/length.</p>
+
+  <div class="two-col">
+    <div>
+      <h3>Curve parameterisation r(t), t ∈ [a,b]</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Integral</th><th>Converts to</th></tr></thead>
+          <tbody>
+            <tr><td><code>∫<sub>C</sub> f ds</code></td><td><code>∫<sub>a</sub><sup>b</sup> f(r(t)) |r′| dt</code></td></tr>
+            <tr><td><code>∫<sub>C</sub> F·dr</code></td><td><code>∫<sub>a</sub><sup>b</sup> F(r(t))·r′(t) dt</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout blue" style="margin-top:12px;">
+        <div class="callout-title">Trivial reparameterisation</div>
+        If you replace t with s=φ(t) (same curve, different speed), the integral is unchanged as long as direction is preserved. Reversing direction flips sign of <strong>F</strong>·d<strong>r</strong> but not ∫f ds.
+      </div>
+    </div>
+    <div>
+      <h3>Surface parameterisation r(u,v), (u,v) ∈ D</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Integral</th><th>Converts to</th></tr></thead>
+          <tbody>
+            <tr><td><code>∬<sub>S</sub> f dS</code></td><td><code>∬<sub>D</sub> f(r(u,v)) |rᵤ×rᵥ| du dv</code></td></tr>
+            <tr><td><code>∬<sub>S</sub> F·dS</code></td><td><code>∬<sub>D</sub> F(r(u,v))·(rᵤ×rᵥ) du dv</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout green" style="margin-top:12px;">
+        <div class="callout-title">Cross product is your scaling factor</div>
+        <code>rᵤ × rᵥ</code> is perpendicular to the surface and its magnitude = area stretch factor.<br>
+        For scalar: take |rᵤ×rᵥ|. For vector flux: keep (rᵤ×rᵥ) as a vector — it encodes both area and orientation.
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:20px;">Common non-parameterised / shortcut forms</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Surface type</th><th>Scalar dS</th><th>Vector dS (upward)</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td>z = g(x,y) over D</td>
+          <td><code>dS = √(1 + gₓ² + g_y²) dA</code></td>
+          <td><code>dS = (−gₓ, −g_y, 1) dA</code></td>
+        </tr>
+        <tr>
+          <td>x = g(y,z) over D</td>
+          <td><code>dS = √(1 + g_y² + g_z²) dA</code></td>
+          <td><code>dS = (1, −g_y, −g_z) dA</code></td>
+        </tr>
+        <tr>
+          <td>Sphere ρ=a (spherical coords)</td>
+          <td><code>dS = a² sin φ dφ dθ</code></td>
+          <td><code>dS = a² sin φ r̂ dφ dθ</code></td>
+        </tr>
+        <tr>
+          <td>Cylinder r=a (cylindrical)</td>
+          <td><code>dS = a dθ dz</code></td>
+          <td><code>dS = a r̂ dθ dz</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="mnemonics">
+  <h2>7 · Mnemonics &amp; Memory Aids</h2>
+
+  <div class="two-col">
+
+    <div class="mnemonic-box">
+      <h4>🧵 The Wire / Shell / Solid analogy</h4>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        Scalar integrals = <strong>weighing things</strong>:<br>
+        • Wire (1D) with density f → ∫<sub>C</sub> f <strong>ds</strong><br>
+        • Shell (2D surface) with density f → ∬<sub>S</sub> f <strong>dS</strong><br>
+        • Solid (3D) with density f → ∭<sub>V</sub> f <strong>dV</strong><br><br>
+        f=1 always gives total length/area/volume.
+      </p>
+    </div>
+
+    <div class="mnemonic-box">
+      <h4>💧 Flow analogies</h4>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        Vector integrals = <strong>measuring flow</strong>:<br>
+        • Work = flow <em>along</em> curve → ∫<sub>C</sub> <strong>F·dr</strong> (tangential)<br>
+        • Flux = flow <em>through</em> surface → ∬<sub>S</sub> <strong>F·dS</strong> (normal)<br><br>
+        Work cares about the <em>tangential</em> component.<br>
+        Flux cares about the <em>normal</em> component.
+      </p>
+    </div>
+
+    <div class="mnemonic-box">
+      <h4>📐 Differential sizing rule</h4>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        <strong>Lowercase scalar</strong>: always a magnitude, always positive<br>
+        <code>ds</code>, <code>dS</code> (italic), <code>dA</code>, <code>dV</code><br><br>
+        <strong>Bold/vector</strong>: has direction, can be negative<br>
+        <code><b>dr</b></code>, <code><b>dS</b></code> (bold)<br><br>
+        <strong>Parameter</strong>: geometric meaning only after multiplying by the scaling factor<br>
+        <code>dt</code>, <code>du dv</code>
+      </p>
+    </div>
+
+    <div class="mnemonic-box">
+      <h4>🔄 Boundary orientation memory</h4>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        <strong>Green's</strong>: walk CCW around D, region stays on your LEFT.<br>
+        <strong>Stokes'</strong>: curl your right hand fingers in direction of C; thumb points in direction of <strong>n</strong> on S.<br>
+        <strong>Divergence</strong>: normal on ∂E always points <em>outward</em> from the volume.
+      </p>
+    </div>
+
+    <div class="mnemonic-box">
+      <h4>⬆ Which theorem to reach for?</h4>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        Hard <strong>closed curve</strong> integral in 2D → <strong>Green's</strong> (become area integral)<br>
+        Hard <strong>closed curve</strong> integral in 3D → <strong>Stokes'</strong> (become surface integral)<br>
+        Hard <strong>closed surface</strong> flux integral → <strong>Divergence</strong> (become volume integral)<br>
+        <strong>F</strong> = ∇f? → <strong>FTC</strong>: just evaluate f at endpoints
+      </p>
+    </div>
+
+    <div class="mnemonic-box">
+      <h4>🔑 The "∂" unifier</h4>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        Every theorem: &nbsp;&nbsp; <strong style="color:var(--yellow);">∫<sub>∂Ω</sub> = ∫<sub>Ω</sub> (d-operator)</strong><br><br>
+        • ∂C = two endpoints; d-op = gradient<br>
+        • ∂D = closed curve; d-op = 2D curl<br>
+        • ∂S = closed curve; d-op = 3D curl<br>
+        • ∂E = closed surface; d-op = divergence<br><br>
+        Dimension of ∂Ω = dimension of Ω minus 1.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="callout yellow" style="margin-top:24px;">
+    <div class="callout-title">Quick-reference: "What is my differential telling me?"</div>
+    <div style="font-size:0.88rem;">
+      <strong>dt</strong> → I'm in 1D parameter land, haven't accounted for curve speed yet<br>
+      <strong>ds</strong> → I have true arc length; the speed |r′| is baked in<br>
+      <strong>dr</strong> → I have a directed vector; dotting with F gives tangential work per unit length<br>
+      <strong>dA / dx dy</strong> → I'm integrating over a flat 2D region<br>
+      <strong>du dv</strong> → I'm in 2D parameter land, haven't accounted for surface stretching yet<br>
+      <strong>dS (scalar)</strong> → I have true surface area; |rᵤ×rᵥ| is baked in<br>
+      <strong>dS (vector)</strong> → I have an oriented surface element; dotting with F gives normal flux<br>
+      <strong>dV</strong> → I'm integrating over a 3D region
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- Quick-reference strip -->
+<section>
+  <h2>8 · At-a-Glance Quick Reference</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Theorem</th>
+        <th>LHS</th>
+        <th>=</th>
+        <th>RHS</th>
+        <th>Dimension gain</th>
+        <th>Key operator</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>FTC (line)</strong></td>
+          <td><code>∫<sub>C</sub> ∇f·dr</code></td>
+          <td>=</td>
+          <td><code>f(b)−f(a)</code></td>
+          <td>1D → 0D</td>
+          <td>gradient ∇f</td>
+        </tr>
+        <tr>
+          <td><strong>Green's</strong></td>
+          <td><code>∮<sub>∂D</sub> P dx+Q dy</code></td>
+          <td>=</td>
+          <td><code>∬<sub>D</sub> (Q<sub>x</sub>−P<sub>y</sub>) dA</code></td>
+          <td>1D → 2D</td>
+          <td>2D curl (z-component)</td>
+        </tr>
+        <tr>
+          <td><strong>Stokes'</strong></td>
+          <td><code>∮<sub>∂S</sub> F·dr</code></td>
+          <td>=</td>
+          <td><code>∬<sub>S</sub> (curl F)·dS</code></td>
+          <td>1D → 2D</td>
+          <td>curl F = ∇×F</td>
+        </tr>
+        <tr>
+          <td><strong>Divergence</strong></td>
+          <td><code>∯<sub>∂E</sub> F·dS</code></td>
+          <td>=</td>
+          <td><code>∭<sub>E</sub> (div F) dV</code></td>
+          <td>2D → 3D</td>
+          <td>div F = ∇·F</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer style="margin-top:48px;">
+  Generated for Calculus III study · Bruce McKernan · 2026
+</footer>
+
+</main>
+</body>
+</html>
