@@ -26,34 +26,39 @@ Include Python only where computation is genuinely illuminating (e.g. visualisin
 
 ## Current state
 
-- **Session 01** (`session_01_diagnostic.ipynb`) — **complete**. All questions answered and feedback written.
-- **Sessions 02–11** notebooks created and ready. User works through them in order.
-- Next up: **Session 02** (`session_02_ibp.ipynb`) — Integration by Parts.
+- **Sessions 01–12** — **complete**. All questions answered and feedback written.
+- **Session 13** (`session_13_trig_log_inverse.ipynb`) — **next up**. Trig sub (secant + double-angle), logarithmic integration, inverse functions. 11 questions across three sections.
 
 ## Session plan
 
-| Session | Topic | Subject | Notes |
+| Session | Topic | Subject | Status |
 |---|---|---|---|
-| 02 | Integration by Parts | Calc 2 | Gap from S01 A3; LIATE, iterated, cyclic, invisible dv |
-| 03 | Orthogonality, Projections, Least Squares | Linear Algebra | Untested core area |
-| 04 | Taylor and Maclaurin Series | Calc 1/2 | Gap tool from S01 A1; limits + approximation |
-| 05 | SVD: Computation and Geometry | Linear Algebra | Retest S01 B2 gap; one Python visualisation |
-| 06 | Series Convergence Tests | Calc 2 | Ratio, comparison, integral, AST |
-| 07 | Multiple Integrals | Calc 3 | Double/triple, polar, change of order |
-| 08 | Trig Substitution and Partial Fractions | Calc 2 | Integration techniques follow-up |
-| 09 | Lagrange Multipliers | Calc 3 | Constrained optimisation |
-| 10 | Line Integrals and Green's Theorem | Calc 3 | Conservative fields, FT of line integrals |
-| 11 | Stokes' and Divergence Theorems | Calc 3 | Vector calculus theorems |
-| 12 | Series: Recognition, Manipulation, Identities | Calc 2 | Targets S06 errors: constant-power factoring, $(1+1/n)^n \to e$, AST naming, conditional convergence; geometric series, power series calculus, root test, Euler's formula, Basel problem; prerequisite for Fourier analysis |
+| 02 | Integration by Parts | Calc 2 | Complete |
+| 03 | Orthogonality, Projections, Least Squares | Linear Algebra | Complete |
+| 04 | Taylor and Maclaurin Series | Calc 1/2 | Complete |
+| 05 | SVD: Computation and Geometry | Linear Algebra | Complete |
+| 06 | Series Convergence Tests | Calc 2 | Complete |
+| 07 | Multiple Integrals | Calc 3 | Complete |
+| 08 | Trig Substitution and Partial Fractions | Calc 2 | Complete |
+| 09 | Lagrange Multipliers | Calc 3 | Complete |
+| 10 | Line Integrals and Green's Theorem | Calc 3 | Complete |
+| 11 | Stokes' and Divergence Theorems | Calc 3 | Complete |
+| 12 | Series: Recognition, Manipulation, Identities | Calc 2 | Complete |
+| 13 | Trig Sub (secant + double-angle), Log Integration, Inverse Functions | Calc 1/2 | **Next** |
 
-After Session 12: plan a mixed review session retesting S01 gaps (IBP, power iteration) and any weaknesses observed along the way.
+After Session 13: plan a mixed review session retesting S01 gaps (IBP, power iteration) and any weaknesses observed along the way.
 
 ## Calibration notes (from Session 01)
 
 - **Strong:** Eigendecomposition (B1), identifying correct technique, algebraic execution once setup is right.
 - **Gaps:** IBP LIATE assignment (A3), nonlinear back-substitution verification (A2), SVD geometric picture (B2), algorithm implementation precision (B3).
-- **Untested:** Taylor series, series convergence, multiple integrals, trig sub, partial fractions, Lagrange multipliers, vector calculus, orthogonality/projections.
+- **Untested at S01:** Taylor series, series convergence, multiple integrals, trig sub, partial fractions, Lagrange multipliers, vector calculus, orthogonality/projections.
 - **Difficulty:** Maintain current level for Calculus; stretch slightly on Linear Algebra.
+
+## Calibration notes (from Session 12)
+
+- **Strong:** Series identification (all 5 Q7(e) series correct), geometric series formula, exponential series, Euler's formula derivation, Basel problem, root test, ratio test, absolute/conditional convergence classification, constant-power factoring (targeted in Q3).
+- **Watch:** Index notation precision — in Q7(d) used $n$ as both summation variable and fixed subscript; off-by-one on telescoping closed form ($1 - 1/N$ vs $1 - 1/(N+1)$). Re-indexing elaboration added to S12 feedback notebook (`s12fb_reindex` cell).
 
 ## When resuming
 
