@@ -8,58 +8,61 @@ Goals:
 - Practice questions with detailed reasoning (not just answers)
 - Python exercises accompanying theory where appropriate
 - Adaptive difficulty across sessions based on observed performance
-- ~2–3 hours/week
+- ~1 question/week (maintenance mode from S14 onwards)
 
-## Agreed process
+## Phase 1 — completed sessions (S01–S13)
 
-1. Each session has two paired notebooks:
-   - `session_NN_<topic>.ipynb` — questions + user's answers
-   - `session_NN_<topic>_feedback.ipynb` — Claude's feedback (LaTeX-rendered, with code cells for verification)
-2. The user works through questions in their notebook, writing answers in markdown cells and code in code cells.
-3. The user pastes or describes answers into Claude Code chat.
-4. Claude writes feedback into the corresponding `_feedback.ipynb`, filling in sections as answers arrive. Sections for unanswered questions are left as *Awaiting your answer.*
-5. Claude notes misconceptions and uses overall performance to calibrate future sessions.
+All 13 sessions complete. Full feedback notebooks exist for each.
 
-## Python exercises
+| Session | Topic | Subject |
+|---|---|---|
+| 01 | Diagnostic | Mixed |
+| 02 | Integration by Parts | Calc 2 |
+| 03 | Orthogonality, Projections, Least Squares | Linear Algebra |
+| 04 | Taylor and Maclaurin Series | Calc 1/2 |
+| 05 | SVD: Computation and Geometry | Linear Algebra |
+| 06 | Series Convergence Tests | Calc 2 |
+| 07 | Multiple Integrals | Calc 3 |
+| 08 | Trig Substitution and Partial Fractions | Calc 2 |
+| 09 | Lagrange Multipliers | Calc 3 |
+| 10 | Line Integrals and Green's Theorem | Calc 3 |
+| 11 | Stokes' and Divergence Theorems | Calc 3 |
+| 12 | Series: Recognition, Manipulation, Identities | Calc 2 |
+| 13 | Trig Sub (secant + double-angle), Log Integration, Inverse Functions | Calc 1/2 |
 
-Include Python only where computation is genuinely illuminating (e.g. visualising SVD geometry, convergence behaviour). The user's goal is mathematical understanding, not Python practice.
+## Phase 2 — maintenance mode
 
-## Current state
+**Format:** ~1 question/week from `session_14_maintenance.ipynb`. Questions are pre-loaded for the first 12 weeks (3 months). User submits one answer at a time; Claude writes feedback into `session_14_maintenance_feedback.ipynb`.
 
-- **Sessions 01–12** — **complete**. All questions answered and feedback written.
-- **Session 13** (`session_13_trig_log_inverse.ipynb`) — **next up**. Trig sub (secant + double-angle), logarithmic integration, inverse functions. 11 questions across three sections.
+**Notebook:** `session_14_maintenance.ipynb` / `session_14_maintenance_feedback.ipynb`
 
-## Session plan
-
-| Session | Topic | Subject | Status |
-|---|---|---|---|
-| 02 | Integration by Parts | Calc 2 | Complete |
-| 03 | Orthogonality, Projections, Least Squares | Linear Algebra | Complete |
-| 04 | Taylor and Maclaurin Series | Calc 1/2 | Complete |
-| 05 | SVD: Computation and Geometry | Linear Algebra | Complete |
-| 06 | Series Convergence Tests | Calc 2 | Complete |
-| 07 | Multiple Integrals | Calc 3 | Complete |
-| 08 | Trig Substitution and Partial Fractions | Calc 2 | Complete |
-| 09 | Lagrange Multipliers | Calc 3 | Complete |
-| 10 | Line Integrals and Green's Theorem | Calc 3 | Complete |
-| 11 | Stokes' and Divergence Theorems | Calc 3 | Complete |
-| 12 | Series: Recognition, Manipulation, Identities | Calc 2 | Complete |
-| 13 | Trig Sub (secant + double-angle), Log Integration, Inverse Functions | Calc 1/2 | **Next** |
-
-After Session 13: plan a mixed review session retesting S01 gaps (IBP, power iteration) and any weaknesses observed along the way.
+**Agreed process (unchanged):**
+1. User works a question in their notebook, writing answers in markdown/code cells.
+2. User pastes answer into Claude Code chat.
+3. Claude writes feedback into the `_feedback.ipynb`, filling in the relevant section.
+4. Claude commits and pushes after each answer.
 
 ## Calibration notes (from Session 01)
 
 - **Strong:** Eigendecomposition (B1), identifying correct technique, algebraic execution once setup is right.
 - **Gaps:** IBP LIATE assignment (A3), nonlinear back-substitution verification (A2), SVD geometric picture (B2), algorithm implementation precision (B3).
-- **Untested at S01:** Taylor series, series convergence, multiple integrals, trig sub, partial fractions, Lagrange multipliers, vector calculus, orthogonality/projections.
-- **Difficulty:** Maintain current level for Calculus; stretch slightly on Linear Algebra.
 
 ## Calibration notes (from Session 12)
 
-- **Strong:** Series identification (all 5 Q7(e) series correct), geometric series formula, exponential series, Euler's formula derivation, Basel problem, root test, ratio test, absolute/conditional convergence classification, constant-power factoring (targeted in Q3).
-- **Watch:** Index notation precision — in Q7(d) used $n$ as both summation variable and fixed subscript; off-by-one on telescoping closed form ($1 - 1/N$ vs $1 - 1/(N+1)$). Re-indexing elaboration added to S12 feedback notebook (`s12fb_reindex` cell).
+- **Strong:** Series identification, geometric/exponential series, Euler's formula, Basel problem, root/ratio tests, absolute/conditional convergence classification.
+- **Watch:** Index notation precision — summation variable vs fixed subscript; off-by-one on telescoping closed forms.
+
+## Calibration notes (from Session 13)
+
+- **Strong:** Trig sub pattern identification and execution (Q1, Q2, Q4), completing the square (Q4), log integration recognition (Q5, Q6, Q7), substitution selection judgment (Q7), implicit differentiation for inverse trig (Q11), inverse function algebra (Q8a, Q9a), $(f^{-1})'$ formula (Q10).
+- **Watch:**
+  - Reference triangle: initially labelled hypotenuse as $x^2+1$ instead of $\sqrt{x^2+1}$ (Q3). Resolved after elaboration — heuristic now in feedback notebook.
+  - Notation slips under pressure: wrote $\cos^2\theta$ where $\cos\theta$ was intended (Q2); wrote $\sqrt{\cos^2\theta} = \cos^2\theta$ rather than $\cos\theta$.
+  - Algebraic verification: verified $f(f^{-1}(x))=x$ numerically at one point rather than algebraically (Q8b).
+  - Domain vs range of exponential: labelled domain of $e^{x-1}-2$ as $(-2,\infty)$ (the range) rather than $\mathbb{R}$ (Q9b). Error: confused output restriction with input restriction.
+  - Interval notation: used $[-\infty,\ldots]$ instead of $(-\infty,\ldots)$.
+- **Untested topics identified for maintenance phase:** improper integrals, volumes of revolution, gradient/directional derivatives, row reduction/null space/rank, L'Hôpital's rule, arc length, parametric curves.
 
 ## When resuming
 
-Check which session is next, read that session's notebook to see which questions have been answered, then pick up from there. Ask the user to share their answers or paste the notebook state.
+Read `session_14_maintenance.ipynb` to find which questions have been answered (non-empty answer cells), then pick up from the next unanswered question. Each question is independent — no need to review prior questions unless the user asks.
